@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tattoos on your feet - 情侶腳踝紋身創作</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- html2canvas for Screenshot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        warmSand: '#EFECE6',
+                        morandiPink: '#D8C4B6',
+                        morandiGreen: '#A2B3A6',
+                    },
+                    fontFamily: {
+                        handwriting: ['Caveat', 'cursive'],
+                        sans: ['Noto Sans TC', 'Noto Sans KR', 'Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FDFBF7;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .polaroid-shadow {
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="font-sans text-stone-700 min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Header & Language Switcher -->
+    <header class="py-3 px-4 border-b border-stone-200/60 bg-cream/90 backdrop-blur sticky top-0 z-40 flex justify-between items-center">
+        <h1 data-i18n="title" class="font-handwriting text-2xl font-bold tracking-wider text-stone-800">Tattoos on your feet</h1>
+        <select id="lang-selector" class="text-xs bg-warmSand/60 border border-stone-200 rounded-lg px-2 py-1 text-stone-600 focus:outline-none cursor-pointer">
+            <option value="zh-TW">繁體中文</option>
+            <option value="en">English</option>
+            <option value="ko">한국어</option>
+            <option value="ja">日本語</option>
+        </select>
+    </header>
+
+    <!-- PAGE 1: 命名與膚色設定階段 (Setup Page) -->
+    <section id="page-setup" class="flex-1 flex flex-col items-center justify-center px-4 py-6 max-w-md mx-auto w-full transition-opacity duration-300">
+        <div class="w-full bg-white p-6 rounded-3xl polaroid-shadow border border-stone-100 space-y-5">
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-morandiPink/20 rounded-full flex items-center justify-center text-2xl mb-2">
+                    ✨👣
+                </div>
+                <h2 data-i18n="setupHeading" class="text-lg font-medium text-stone-800">印刻專屬浪漫印記</h2>
+                <p data-i18n="setupSubheading" class="text-xs text-stone-400 mt-0.5">選擇各自的膚色與名字，開啟情侶刺青設計</p>
+            </div>
+
+            <!-- Partner A Config -->
+            <div class="space-y-2 bg-cream/40 p-3.5 rounded-2xl border border-stone-100">
+                <div class="flex justify-between items-center">
+                    <label data-i18n="labelA" class="text-xs font-medium text-stone-600">Partner A 名字</label>
+                    <div class="flex gap-1.5 skin-picker" data-partner="A">
+                        <button type="button" class="skin-btn-a w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition ring-2 ring-stone-400 cursor-pointer" style="background-color: #F8E5D8;" data-color="#F8E5D8" title="白皙"></button>
+                        <button type="button" class="skin-btn-a w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition cursor-pointer" style="background-color: #EAC4A8;" data-color="#EAC4A8" title="自然小麥"></button>
+                        <button type="button" class="skin-btn-a w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition cursor-pointer" style="background-color: #C89973;" data-color="#C89973" title="焦糖色"></button>
+                        <button type="button" class="skin-btn-a w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition cursor-pointer" style="background-color: #8D5524;" data-color="#8D5524" title="深膚色"></button>
+                    </div>
+                </div>
+                <input type="text" id="input-name-a" value="Alex" maxlength="10" class="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-morandiPink">
+            </div>
+
+            <!-- Partner B Config -->
+            <div class="space-y-2 bg-cream/40 p-3.5 rounded-2xl border border-stone-100">
+                <div class="flex justify-between items-center">
+                    <label data-i18n="labelB" class="text-xs font-medium text-stone-600">Partner B 名字</label>
+                    <div class="flex gap-1.5 skin-picker" data-partner="B">
+                        <button type="button" class="skin-btn-b w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition cursor-pointer" style="background-color: #F8E5D8;" data-color="#F8E5D8" title="白皙"></button>
+                        <button type="button" class="skin-btn-b w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition ring-2 ring-stone-400 cursor-pointer" style="background-color: #EAC4A8;" data-color="#EAC4A8" title="自然小麥"></button>
+                        <button type="button" class="skin-btn-b w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition cursor-pointer" style="background-color: #C89973;" data-color="#C89973" title="焦糖色"></button>
+                        <button type="button" class="skin-btn-b w-5 h-5 rounded-full border border-stone-300 ring-offset-1 transition cursor-pointer" style="background-color: #8D5524;" data-color="#8D5524" title="深膚色"></button>
+                    </div>
+                </div>
+                <input type="text" id="input-name-b" value="Chloe" maxlength="10" class="w-full px-3 py-2 rounded-xl border border-stone-200 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-morandiPink">
+            </div>
+
+            <button id="btn-start" type="button" data-i18n="btnStart" class="w-full py-3.5 bg-stone-800 hover:bg-stone-900 text-white font-medium rounded-2xl shadow-md transition active:scale-95 text-sm cursor-pointer">
+                開始刺青設計
+            </button>
+        </div>
+    </section>
+
+    <!-- PAGE 2: 主畫面 & Canvas 互動設計階段 (Main Canvas Page) -->
+    <section id="page-main" class="hidden flex-1 flex-col items-center justify-between p-3 max-w-md mx-auto w-full space-y-3">
+        
+        <!-- Polaroid Card Wrapper (Export Target) -->
+        <div id="polaroid-card" class="w-full bg-white p-3.5 pb-5 rounded-2xl polaroid-shadow border border-stone-100 relative">
+            <div class="flex justify-between items-center px-1 mb-2">
+                <span id="display-name-a" class="font-handwriting text-lg text-stone-700 font-bold">Alex</span>
+                <span class="text-xs text-stone-300 font-handwriting">♡</span>
+                <span id="display-name-b" class="font-handwriting text-lg text-stone-700 font-bold">Chloe</span>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="relative w-full aspect-[4/3] bg-warmSand/30 rounded-xl overflow-hidden border border-stone-100">
+                <canvas id="tattoo-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+            </div>
+
+            <div class="mt-2.5 flex justify-between items-center text-[10px] text-stone-400 px-1 font-mono">
+                <span data-i18n="cardFooter">TATTOOS ON YOUR FEET</span>
+                <span id="card-date">2026.10.22</span>
+            </div>
+        </div>
+
+        <!-- Controls Hint -->
+        <div class="text-[10px] text-stone-400 text-center flex items-center justify-center gap-2">
+            <span data-i18n="hintSelect">💡 點擊圖案選取</span>
+            <span>•</span>
+            <span data-i18n="hintDrag">單指拖曳移動</span>
+        </div>
+
+        <!-- Tattoo Customization Toolbar -->
+        <div class="w-full bg-white rounded-2xl p-3.5 shadow-sm border border-stone-100 space-y-3">
+            
+            <!-- Minimalist SVG Vector Stickers Row -->
+            <div>
+                <span data-i18n="labelStickers" class="text-[11px] font-medium text-stone-500 block mb-1.5">選擇極簡刺青圖案</span>
+                <div class="flex gap-2 overflow-x-auto no-scrollbar py-1">
+                    <button type="button" class="btn-sticker shrink-0 w-9 h-9 rounded-xl bg-cream border border-stone-200 flex items-center justify-center hover:bg-stone-100 active:scale-90 transition cursor-pointer text-stone-800" data-shape="heart" title="純色愛心">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                    <button type="button" class="btn-sticker shrink-0 w-9 h-9 rounded-xl bg-cream border border-stone-200 flex items-center justify-center hover:bg-stone-100 active:scale-90 transition cursor-pointer text-stone-800" data-shape="infinity" title="無限大">
+                        <svg class="w-5 h-5 fill-none stroke-current" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18.18 8C15.7 8 13.8 10.1 12 12c-1.8 1.9-3.7 4-6.18 4C3.71 16 2 14.21 2 12s1.71-4 3.82-4c2.48 0 4.38 2.1 6.18 4 1.8-1.9 3.7-4 6.18-4C20.29 8 22 9.79 22 12s-1.71 4-3.82 4z"/></svg>
+                    </button>
+                    <button type="button" class="btn-sticker shrink-0 w-9 h-9 rounded-xl bg-cream border border-stone-200 flex items-center justify-center hover:bg-stone-100 active:scale-90 transition cursor-pointer text-stone-800" data-shape="anchor" title="小錨">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3c0 1.31.83 2.42 2 2.83V11H8a1 1 0 0 0 0 2h3v6.05A7.002 7.002 0 0 1 5 13a1 1 0 1 0-2 0 9 9 0 0 0 8 8.94V22h2v-.06A9 9 0 0 0 21 13a1 1 0 1 0-2 0 7.002 7.002 0 0 1-6 6.05V13h3a1 1 0 1 0 0-2h-3V7.83A3.001 3.001 0 0 0 15 5a3 3 0 0 0-3-3zm0 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+                    </button>
+                    <button type="button" class="btn-sticker shrink-0 w-9 h-9 rounded-xl bg-cream border border-stone-200 flex items-center justify-center hover:bg-stone-100 active:scale-90 transition cursor-pointer text-stone-800" data-shape="star" title="星星">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </button>
+                    <button type="button" class="btn-sticker shrink-0 w-9 h-9 rounded-xl bg-cream border border-stone-200 flex items-center justify-center hover:bg-stone-100 active:scale-90 transition cursor-pointer text-stone-800" data-shape="moon" title="新月">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.3 2a10 10 0 0 0-1.9 20 10 10 0 0 0 8.7-5 1 1 0 0 0-1-1.5 7 7 0 1 1-5.8-13.2 1 1 0 0 0 0-1.8z"/></svg>
+                    </button>
+                    <button type="button" class="btn-sticker shrink-0 w-9 h-9 rounded-xl bg-cream border border-stone-200 flex items-center justify-center hover:bg-stone-100 active:scale-90 transition cursor-pointer text-stone-800" data-shape="puzzle" title="拼圖">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H2V20c0 1.1.9 2 2 2h4v-1.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5V22h4c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Text & Ink Color -->
+            <div class="grid grid-cols-12 gap-2 items-center">
+                <div class="col-span-7 flex gap-1">
+                    <input type="text" id="input-tattoo-text" data-i18n-placeholder="placeholderText" placeholder="自訂文字 (如 2026)" maxlength="12" class="w-full px-2.5 py-1 rounded-lg border border-stone-200 text-xs focus:outline-none focus:ring-1 focus:ring-morandiPink bg-cream/30">
+                    <button type="button" id="btn-add-text" data-i18n="btnAdd" class="px-2.5 py-1 bg-stone-700 text-white text-xs rounded-lg shrink-0 cursor-pointer">新增</button>
+                </div>
+
+                <!-- Classic Tattoo Ink Palette -->
+                <div class="col-span-5 flex justify-end gap-1.5 items-center">
+                    <button type="button" class="btn-ink w-5 h-5 rounded-full ring-2 ring-offset-1 ring-stone-400 cursor-pointer" style="background-color: #1a1a1a;" data-color="#1a1a1a" title="純黑"></button>
+                    <button type="button" class="btn-ink w-5 h-5 rounded-full cursor-pointer" style="background-color: #1b2a4a;" data-color="#1b2a4a" title="深藍"></button>
+                    <button type="button" class="btn-ink w-5 h-5 rounded-full cursor-pointer" style="background-color: #4a1b1b;" data-color="#4a1b1b" title="暗紅"></button>
+                    <button type="button" class="btn-ink w-5 h-5 rounded-full cursor-pointer" style="background-color: #1b4a2a;" data-color="#1b4a2a" title="森林綠"></button>
+                </div>
+            </div>
+
+            <!-- Scale & Rotate Sliders -->
+            <div id="transform-panel" class="bg-warmSand/20 p-2.5 rounded-xl space-y-2 opacity-40 pointer-events-none transition-opacity">
+                <div class="flex items-center justify-between text-[11px] text-stone-500">
+                    <span data-i18n="labelScale">大小縮放</span>
+                    <input type="range" id="slider-scale" min="0.5" max="2.0" step="0.1" value="1.0" class="w-36 accent-stone-700 cursor-pointer">
+                </div>
+                <div class="flex items-center justify-between text-[11px] text-stone-500">
+                    <span data-i18n="labelRotate">旋轉角度</span>
+                    <input type="range" id="slider-rotate" min="-3.14" max="3.14" step="0.1" value="0" class="w-36 accent-stone-700 cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Action Delete & Clear -->
+            <div class="flex justify-between items-center pt-1 border-t border-stone-100 text-xs">
+                <button type="button" id="btn-delete" class="text-rose-500 flex items-center gap-1 opacity-50 cursor-not-allowed" disabled>
+                    🗑️ <span data-i18n="btnDelete">刪除選取圖案</span>
+                </button>
+                <button type="button" id="btn-clear-all" data-i18n="btnClear" class="text-stone-400 hover:text-stone-600 cursor-pointer">清空畫布</button>
+            </div>
+        </div>
+
+        <!-- Export Button -->
+        <button type="button" id="btn-export" class="w-full py-3.5 bg-gradient-to-r from-stone-800 to-stone-700 text-white font-medium rounded-2xl shadow-md transition active:scale-95 flex items-center justify-center gap-2 text-sm cursor-pointer">
+            📷 <span data-i18n="btnExport">生成 Instagram 紀念卡片</span>
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-2.5 text-center text-[10px] text-stone-400">
+        Made with ♡ for lovers • Single File H5 Game
+    </footer>
+
+    <!-- JavaScript Game Logic & i18n -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. Multilingual Dictionary ---
+            const i18n = {
+                'zh-TW': {
+                    title: 'Tattoos on your feet',
+                    setupHeading: '印刻專屬浪漫印記',
+                    setupSubheading: '選擇各自的膚色與名字，開啟情侶刺青設計',
+                    labelA: 'Partner A 名字',
+                    labelB: 'Partner B 名字',
+                    btnStart: '開始刺青設計',
+                    hintSelect: '💡 點擊圖案選取',
+                    hintDrag: '單指拖曳移動',
+                    labelStickers: '選擇極簡刺青圖案',
+                    placeholderText: '自訂文字 (如 2026)',
+                    btnAdd: '新增',
+                    labelScale: '大小縮放',
+                    labelRotate: '旋轉角度',
+                    btnDelete: '刪除選取圖案',
+                    btnClear: '清空畫布',
+                    btnExport: '生成 Instagram 紀念卡片',
+                    cardFooter: 'TATTOOS ON YOUR FEET',
+                    exporting: '正在生成紀念圖片...',
+                    exportSuccess: '已成功下載紀念卡片！'
+                },
+                'en': {
+                    title: 'Tattoos on your feet',
+                    setupHeading: 'Etch Your Romance',
+                    setupSubheading: 'Choose skin tones & names to start designing',
+                    labelA: 'Partner A Name',
+                    labelB: 'Partner B Name',
+                    btnStart: 'Start Designing',
+                    hintSelect: '💡 Tap sticker to select',
+                    hintDrag: 'Drag to move',
+                    labelStickers: 'Choose Tattoo Stickers',
+                    placeholderText: 'Custom text (e.g. 2026)',
+                    btnAdd: 'Add',
+                    labelScale: 'Scale',
+                    labelRotate: 'Rotate',
+                    btnDelete: 'Delete Selected',
+                    btnClear: 'Clear All',
+                    btnExport: 'Generate IG Polaroid Card',
+                    cardFooter: 'TATTOOS ON YOUR FEET',
+                    exporting: 'Generating Card...',
+                    exportSuccess: 'Card Downloaded Successfully!'
+                },
+                'ko': {
+                    title: 'Tattoos on your feet',
+                    setupHeading: '우리만의 커플 타투',
+                    setupSubheading: '피부톤과 이름을 설정하고 디자인을 시작하세요',
+                    labelA: '파트너 A 이름',
+                    labelB: '파트너 B 이름',
+                    btnStart: '타투 디자인 시작',
+                    hintSelect: '💡 스티커를 터치하여 선택',
+                    hintDrag: '드래그하여 이동',
+                    labelStickers: '미니멀 타투 도안 선택',
+                    placeholderText: '문구 입력 (예: 2026)',
+                    btnAdd: '추가',
+                    labelScale: '크기 조절',
+                    labelRotate: '회전',
+                    btnDelete: '선택 삭제',
+                    btnClear: '모두 지우기',
+                    btnExport: '인스타그램 폴라로이드 카드 생성',
+                    cardFooter: 'TATTOOS ON YOUR FEET',
+                    exporting: '카드 생성 중...',
+                    exportSuccess: '카드가 다운로드되었습니다!'
+                },
+                'ja': {
+                    title: 'Tattoos on your feet',
+                    setupHeading: '二人の足首タトゥー',
+                    setupSubheading: '肌の色と名前を選んでデザインを始めましょう',
+                    labelA: 'パートナー A の名前',
+                    labelB: 'パートナー B の名前',
+                    btnStart: 'デザインを始める',
+                    hintSelect: '💡 タトゥーをタップして選択',
+                    hintDrag: 'ドラッグで移動',
+                    labelStickers: 'ミニマルタトゥー図案',
+                    placeholderText: '文字を入力 (例: 2026)',
+                    btnAdd: '追加',
+                    labelScale: '拡大縮小',
+                    labelRotate: '回転',
+                    btnDelete: '選択を削除',
+                    btnClear: 'すべてクリア',
+                    btnExport: 'Instagram 記念カードを生成',
+                    cardFooter: 'TATTOOS ON YOUR FEET',
+                    exporting: '画像を生成中...',
+                    exportSuccess: '記念カードをダウンロードしました！'
+                }
+            };
+
+            let currentLang = 'zh-TW';
+
+            function updateTexts() {
+                const t = i18n[currentLang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key]) el.textContent = t[key];
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder');
+                    if (t[key]) el.placeholder = t[key];
+                });
+            }
+
+            const langSelector = document.getElementById('lang-selector');
+            if (langSelector) {
+                langSelector.addEventListener('change', (e) => {
+                    currentLang = e.target.value;
+                    updateTexts();
+                });
+            }
+
+            // --- 2. Game State ---
+            const state = {
+                partnerA: { name: 'Alex', skinColor: '#F8E5D8' },
+                partnerB: { name: 'Chloe', skinColor: '#EAC4A8' },
+                currentInkColor: '#1a1a1a', // Classic Ink Black
+                tattoos: [],
+                selectedId: null,
+                isDragging: false,
+                dragOffset: { x: 0, y: 0 }
+            };
+
+            // Skin Tone Selection Handlers (Partner A)
+            document.querySelectorAll('.skin-btn-a').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.skin-btn-a').forEach(b => b.classList.remove('ring-2', 'ring-stone-400'));
+                    btn.classList.add('ring-2', 'ring-stone-400');
+                    state.partnerA.skinColor = btn.getAttribute('data-color');
+                });
+            });
+
+            // Skin Tone Selection Handlers (Partner B)
+            document.querySelectorAll('.skin-btn-b').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.skin-btn-b').forEach(b => b.classList.remove('ring-2', 'ring-stone-400'));
+                    btn.classList.add('ring-2', 'ring-stone-400');
+                    state.partnerB.skinColor = btn.getAttribute('data-color');
+                });
+            });
+
+            // Navigation & Start
+            const pageSetup = document.getElementById('page-setup');
+            const pageMain = document.getElementById('page-main');
+            const btnStart = document.getElementById('btn-start');
+            const inputNameA = document.getElementById('input-name-a');
+            const inputNameB = document.getElementById('input-name-b');
+            const displayNameA = document.getElementById('display-name-a');
+            const displayNameB = document.getElementById('display-name-b');
+            const cardDate = document.getElementById('card-date');
+
+            const today = new Date();
+            if (cardDate) {
+                cardDate.textContent = `${today.getFullYear()}.${(today.getMonth() + 1).toString().padStart(2, '0')}.${today.getDate().toString().padStart(2, '0')}`;
+            }
+
+            if (btnStart) {
+                btnStart.addEventListener('click', () => {
+                    state.partnerA.name = inputNameA.value.trim() || 'Partner A';
+                    state.partnerB.name = inputNameB.value.trim() || 'Partner B';
+
+                    displayNameA.textContent = state.partnerA.name;
+                    displayNameB.textContent = state.partnerB.name;
+
+                    pageSetup.classList.add('hidden');
+                    pageMain.classList.remove('hidden');
+                    pageMain.classList.add('flex');
+
+                    initCanvas();
+                });
+            }
+
+            // --- 3. Dynamic SVG Ankle Background Generation ---
+            function createAnklesSVGDataUrl(colorA, colorB) {
+                const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+                    <defs>
+                        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F7F4EF" />
+                            <stop offset="100%" stop-color="#EAE3D9" />
+                        </linearGradient>
+                        <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+                            <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#5C4D41" flood-opacity="0.12"/>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#bgGrad)"/>
+                    
+                    <!-- Left Ankle (Partner A) -->
+                    <g filter="url(#softShadow)">
+                        <path d="M180 -20 C 220 180, 210 260, 190 340 C 170 410, 130 460, 90 520 C 130 550, 240 560, 310 500 C 340 450, 330 380, 310 320 C 300 280, 320 180, 340 -20 Z" fill="${colorA}" />
+                        <ellipse cx="255" cy="330" rx="16" ry="24" fill="#FFFFFF" opacity="0.3" transform="rotate(-15 255 330)"/>
+                    </g>
+
+                    <!-- Right Ankle (Partner B) -->
+                    <g filter="url(#softShadow)">
+                        <path d="M460 -20 C 480 180, 490 270, 480 330 C 470 390, 440 450, 430 520 C 480 550, 580 540, 660 480 C 670 420, 630 370, 600 310 C 580 270, 580 180, 600 -20 Z" fill="${colorB}" />
+                        <ellipse cx="535" cy="330" rx="16" ry="24" fill="#FFFFFF" opacity="0.3" transform="rotate(15 535 330)"/>
+                    </g>
+
+                    <path d="M400 100 L400 500" stroke="#D8C4B6" stroke-width="1" stroke-dasharray="6 6" opacity="0.4"/>
+                </svg>`;
+                return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+            }
+
+            const canvas = document.getElementById('tattoo-canvas');
+            const ctx = canvas.getContext('2d');
+            let bgImage = new Image();
+
+            function initCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * 2;
+                canvas.height = rect.height * 2;
+                updateCanvasBackground();
+            }
+
+            function updateCanvasBackground() {
+                bgImage.src = createAnklesSVGDataUrl(state.partnerA.skinColor, state.partnerB.skinColor);
+                bgImage.onload = () => { renderCanvas(); };
+            }
+
+            // --- 4. Canvas Render Loop with Multiply & Transparency ---
+            function renderCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (bgImage.complete) {
+                    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+                }
+
+                state.tattoos.forEach(tattoo => {
+                    ctx.save();
+                    ctx.translate(tattoo.x, tattoo.y);
+                    ctx.rotate(tattoo.rotation || 0);
+                    ctx.scale(tattoo.scale || 1, tattoo.scale || 1);
+
+                    ctx.fillStyle = tattoo.color;
+                    ctx.strokeStyle = tattoo.color;
+
+                    // Blend Mode for Realistic Skin Tattoo Effect
+                    ctx.globalCompositeOperation = 'multiply';
+                    ctx.globalAlpha = 0.82;
+
+                    if (tattoo.type === 'text') {
+                        ctx.font = '600 28px "Caveat", cursive, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(tattoo.content, 0, 0);
+                    } else if (tattoo.type === 'shape') {
+                        drawVectorShape(ctx, tattoo.content);
+                    }
+
+                    // Reset Composite Operation for Selection Box Line
+                    ctx.globalCompositeOperation = 'source-over';
+
+                    if (tattoo.id === state.selectedId) {
+                        ctx.globalAlpha = 1.0;
+                        ctx.strokeStyle = '#D8C4B6';
+                        ctx.lineWidth = 1.5;
+                        ctx.setLineDash([4, 4]);
+                        ctx.strokeRect(-35, -35, 70, 70);
+                    }
+
+                    ctx.restore();
+                });
+
+                // UI Controls Sync
+                const btnDelete = document.getElementById('btn-delete');
+                const transformPanel = document.getElementById('transform-panel');
+                if (state.selectedId !== null) {
+                    btnDelete.disabled = false;
+                    btnDelete.classList.remove('opacity-50', 'cursor-not-allowed');
+                    transformPanel.classList.remove('opacity-40', 'pointer-events-none');
+                } else {
+                    btnDelete.disabled = true;
+                    btnDelete.classList.add('opacity-50', 'cursor-not-allowed');
+                    transformPanel.classList.add('opacity-40', 'pointer-events-none');
+                }
+            }
+
+            // --- Vector Shapes Renderer (Canvas Paths) ---
+            function drawVectorShape(ctx, shape) {
+                const p = new Path2D();
+                if (shape === 'heart') {
+                    p.addPath(new Path2D("M 0 -12 C -15 -32, -32 -8, 0 20 C 32 -8, 15 -32, 0 -12 Z"));
+                    ctx.fill(p);
+                } else if (shape === 'infinity') {
+                    ctx.lineWidth = 3.5;
+                    p.addPath(new Path2D("M -18 0 C -28 -12, -32 12, -18 0 C -4 -12, 4 12, 18 0 C 32 -12, 28 12, 18 0 C 4 -12, -4 12, -18 0 Z"));
+                    ctx.stroke(p);
+                } else if (shape === 'anchor') {
+                    ctx.lineWidth = 3;
+                    p.addPath(new Path2D("M 0 -20 A 4 4 0 1 1 0 -12 A 4 4 0 1 1 0 -20 M 0 -12 L 0 18 M -12 -4 L 12 -4 M -18 8 C -18 24, 18 24, 18 8 M -18 8 L -22 12 M 18 8 L 22 12"));
+                    ctx.stroke(p);
+                } else if (shape === 'star') {
+                    p.addPath(new Path2D("M 0 -22 L 6 -6 L 22 -4 L 10 7 L 14 22 L 0 13 L -14 22 L -10 7 L -22 -4 L -6 -6 Z"));
+                    ctx.fill(p);
+                } else if (shape === 'moon') {
+                    p.addPath(new Path2D("M 6 -20 A 20 20 0 1 0 20 10 A 15 15 0 1 1 6 -20 Z"));
+                    ctx.fill(p);
+                } else if (shape === 'puzzle') {
+                    p.addPath(new Path2D("M -15 -15 L -5 -15 A 5 5 0 0 1 5 -15 L 15 -15 L 15 -5 A 5 5 0 0 1 15 5 L 15 15 L 5 15 L 5 10 A 5 5 0 0 0 -5 10 L -5 15 L -15 15 Z"));
+                    ctx.fill(p);
+                }
+            }
+
+            // --- 5. Tattoos Management & Interaction ---
+            function addTattoo(type, content) {
+                const newTattoo = {
+                    id: Date.now(),
+                    type: type,
+                    content: content,
+                    x: canvas.width / 2 + (Math.random() * 50 - 25),
+                    y: canvas.height / 2 + (Math.random() * 50 - 25),
+                    color: state.currentInkColor,
+                    scale: 1,
+                    rotation: 0
+                };
+                state.tattoos.push(newTattoo);
+                state.selectedId = newTattoo.id;
+                renderCanvas();
+            }
+
+            document.querySelectorAll('.btn-sticker').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    addTattoo('shape', btn.getAttribute('data-shape'));
+                });
+            });
+
+            const inputTattooText = document.getElementById('input-tattoo-text');
+            const btnAddText = document.getElementById('btn-add-text');
+            if (btnAddText) {
+                btnAddText.addEventListener('click', () => {
+                    const val = inputTattooText.value.trim();
+                    if (val) {
+                        addTattoo('text', val);
+                        inputTattooText.value = '';
+                    }
+                });
+            }
+
+            // Tattoo Ink Color Picker
+            document.querySelectorAll('.btn-ink').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.btn-ink').forEach(b => b.classList.remove('ring-2', 'ring-offset-1', 'ring-stone-400'));
+                    btn.classList.add('ring-2', 'ring-offset-1', 'ring-stone-400');
+                    state.currentInkColor = btn.getAttribute('data-color');
+
+                    if (state.selectedId !== null) {
+                        const sel = state.tattoos.find(t => t.id === state.selectedId);
+                        if (sel) { sel.color = state.currentInkColor; renderCanvas(); }
+                    }
+                });
+            });
+
+            // Sliders
+            const sliderScale = document.getElementById('slider-scale');
+            const sliderRotate = document.getElementById('slider-rotate');
+
+            if (sliderScale) {
+                sliderScale.addEventListener('input', (e) => {
+                    if (state.selectedId !== null) {
+                        const sel = state.tattoos.find(t => t.id === state.selectedId);
+                        if (sel) { sel.scale = parseFloat(e.target.value); renderCanvas(); }
+                    }
+                });
+            }
+
+            if (sliderRotate) {
+                sliderRotate.addEventListener('input', (e) => {
+                    if (state.selectedId !== null) {
+                        const sel = state.tattoos.find(t => t.id === state.selectedId);
+                        if (sel) { sel.rotation = parseFloat(e.target.value); renderCanvas(); }
+                    }
+                });
+            }
+
+            // Delete & Clear
+            const btnDelete = document.getElementById('btn-delete');
+            if (btnDelete) {
+                btnDelete.addEventListener('click', () => {
+                    if (state.selectedId !== null) {
+                        state.tattoos = state.tattoos.filter(t => t.id !== state.selectedId);
+                        state.selectedId = null;
+                        renderCanvas();
+                    }
+                });
+            }
+
+            const btnClearAll = document.getElementById('btn-clear-all');
+            if (btnClearAll) {
+                btnClearAll.addEventListener('click', () => {
+                    state.tattoos = [];
+                    state.selectedId = null;
+                    renderCanvas();
+                });
+            }
+
+            // --- 6. Touch & Mouse Drag Handlers ---
+            function getCoords(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: (clientX - rect.left) * (canvas.width / rect.width),
+                    y: (clientY - rect.top) * (canvas.height / rect.height)
+                };
+            }
+
+            function handleStart(e) {
+                const coords = getCoords(e);
+                let hit = false;
+                for (let i = state.tattoos.length - 1; i >= 0; i--) {
+                    const t = state.tattoos[i];
+                    if (Math.hypot(coords.x - t.x, coords.y - t.y) < 45) {
+                        state.selectedId = t.id;
+                        state.isDragging = true;
+                        state.dragOffset = { x: coords.x - t.x, y: coords.y - t.y };
+                        if (sliderScale) sliderScale.value = t.scale;
+                        if (sliderRotate) sliderRotate.value = t.rotation;
+                        hit = true;
+                        break;
+                    }
+                }
+                if (!hit) state.selectedId = null;
+                renderCanvas();
+            }
+
+            function handleMove(e) {
+                if (!state.isDragging || state.selectedId === null) return;
+                e.preventDefault();
+                const coords = getCoords(e);
+                const sel = state.tattoos.find(t => t.id === state.selectedId);
+                if (sel) {
+                    sel.x = coords.x - state.dragOffset.x;
+                    sel.y = coords.y - state.dragOffset.y;
+                    renderCanvas();
+                }
+            }
+
+            function handleEnd() { state.isDragging = false; }
+
+            if (canvas) {
+                canvas.addEventListener('mousedown', handleStart);
+                canvas.addEventListener('mousemove', handleMove);
+                window.addEventListener('mouseup', handleEnd);
+                canvas.addEventListener('touchstart', handleStart, { passive: false });
+                canvas.addEventListener('touchmove', handleMove, { passive: false });
+                window.addEventListener('touchend', handleEnd);
+            }
+
+            // --- 7. Export Polaroid Screenshot ---
+            const btnExport = document.getElementById('btn-export');
+            if (btnExport) {
+                btnExport.addEventListener('click', async () => {
+                    state.selectedId = null;
+                    renderCanvas();
+
+                    const card = document.getElementById('polaroid-card');
+                    const t = i18n[currentLang];
+                    btnExport.textContent = t.exporting;
+                    btnExport.disabled = true;
+
+                    try {
+                        const canvasImage = await html2canvas(card, { scale: 3, useCORS: true, backgroundColor: null });
+                        const link = document.createElement('a');
+                        link.download = `Tattoos_on_your_feet_${state.partnerA.name}_${state.partnerB.name}.png`;
+                        link.href = canvasImage.toDataURL('image/png');
+                        link.click();
+
+                        btnExport.textContent = t.exportSuccess;
+                        setTimeout(() => {
+                            btnExport.textContent = t.btnExport;
+                            btnExport.disabled = false;
+                        }, 3000);
+                    } catch (err) {
+                        console.error(err);
+                        alert('Export failed.');
+                        btnExport.textContent = t.btnExport;
+                        btnExport.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
